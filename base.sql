@@ -2,7 +2,7 @@ create database origin
 
 create sequence public.registro_id start 1;
 
-create table registros(
+create table Registros(
 	id INT primary key default nextval('public.registro_id'),
 	compania varchar(80) not null,
 	persona varchar(80) not null,
