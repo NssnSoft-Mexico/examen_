@@ -61,7 +61,6 @@ export class AppComponent implements OnInit {
   async clickModalVal(valores:any) {
     this.dataFor=valores;
     this.items = await this.authService.setPersona(this.dataFor.compania, this.dataFor.persona, this.dataFor.correo, this.dataFor.telefono);
-    console.log("this", this.items)
     if (this.items.errores) {
       this.errores = this.items.errores;
       this.validaRes=false;
