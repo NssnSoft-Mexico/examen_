@@ -27,26 +27,26 @@ namespace back_end.Controllers
         public async Task<ActionResult<Registros>> Post(Registros registros) 
         {
 
-            var errores = new List<string>();
+            var errores = new Dictionary<string, bool>();
 
             if (!Regex.IsMatch(registros.correo, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
             {
-                errores.Add($"Correo inválido → {registros.correo}");
+                errores["correo"] = true;
             }
 
             if (!Regex.IsMatch(registros.telefono, @"^\d{10}$"))
             {
-                errores.Add($"Teléfono inválido → {registros.telefono}");
+                errores["telefono"] = true;
             }
 
             if (!Regex.IsMatch(registros.compania, @"^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"))
             {
-                errores.Add($"Nombre de compañia inválido → {registros.compania}");
+                errores["compania"] = true;
             }
 
             if (!Regex.IsMatch(registros.persona, @"^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"))
             {
-                errores.Add($"Nombre de persona inválido → {registros.persona}");
+                errores["persona"] = true;
             }
 
             if (errores.Count > 0)
