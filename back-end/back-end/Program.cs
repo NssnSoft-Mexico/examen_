@@ -27,6 +27,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("PermitirTodo");
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
