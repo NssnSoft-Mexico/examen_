@@ -32,6 +32,7 @@ export class AppComponent implements OnInit {
   checkoutForm: FormGroup;
 
   constructor(private authService: AuthService, private formBuilder: FormBuilder) {
+
     this.checkoutForm = this.formBuilder.group({
       compania: ['', Validators.required],
       persona: ['', Validators.required],
@@ -39,6 +40,7 @@ export class AppComponent implements OnInit {
       telefono: ['', Validators.required],
       terminos: [false, [Validators.required, Validators.requiredTrue]]
     });
+    
   }
 
   ngOnInit() { }
@@ -59,7 +61,7 @@ export class AppComponent implements OnInit {
   async clickModalVal(valores:any) {
     this.dataFor=valores;
     this.items = await this.authService.setPersona(this.dataFor.compania, this.dataFor.persona, this.dataFor.correo, this.dataFor.telefono);
-    console.log('DATOS: ', this.items);
+    console.log("this", this.items)
     if (this.items.errores) {
       this.errores = this.items.errores;
       this.validaRes=false;
@@ -68,7 +70,7 @@ export class AppComponent implements OnInit {
       this.validaRes=true;
       this.titleModal='Datos guardados correctamente';
     }
-    this.modalV = !this.modalV;
+    this.modalV = true;
   }
   
   clickModal() {

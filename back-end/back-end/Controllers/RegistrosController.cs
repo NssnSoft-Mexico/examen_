@@ -1,5 +1,6 @@
 ﻿using back_end.Data;
 using back_end.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
@@ -51,7 +52,7 @@ namespace back_end.Controllers
 
             if (errores.Count > 0)
             {
-                return BadRequest(new
+                return Ok(new
                 {
                     mensaje = "Hay errores en el registro capturado",
                     errores
