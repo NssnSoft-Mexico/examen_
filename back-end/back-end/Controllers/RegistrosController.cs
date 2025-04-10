@@ -26,6 +26,25 @@ namespace back_end.Controllers
         [HttpPost]
         public async Task<ActionResult<Registros>> Post(Registros registros) 
         {
+            if (!Regex.IsMatch(registros.correo, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            {
+                return BadRequest(new { mensaje = $"Hay un problema en el registro capturado: Correo inválido → {registros.correo}" });
+            }
+
+            if (!Regex.IsMatch(registros.telefono, @"^\d{16}$"))
+            {
+                return BadRequest(new { mensaje = $"Hay un problema en el registro capturado: Teléfono inválido → {registros.telefono}" });
+            }
+
+            if (!Regex.IsMatch(registros.compania, @"^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"))
+            {
+                return BadRequest(new { mensaje = $"Hay un problema en el registro capturado: Persona inválida → {registros.compania}" });
+            }
+
+            if (!Regex.IsMatch(registros.persona, @"^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"))
+            {
+                return BadRequest(new { mensaje = $"Hay un problema en el registro capturado: Persona2 inválida → {registros.persona}" });
+            }
             _context.Registros.Add(registros);
             await _context.SaveChangesAsync();
             return Ok(registros);
