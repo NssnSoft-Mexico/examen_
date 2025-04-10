@@ -26,25 +26,38 @@ namespace back_end.Controllers
         [HttpPost]
         public async Task<ActionResult<Registros>> Post(Registros registros) 
         {
+
+            var errores = new List<string>();
+
             if (!Regex.IsMatch(registros.correo, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
             {
-                return BadRequest(new { mensaje = $"Hay un problema en el registro capturado: Correo inválido → {registros.correo}" });
+                errores.Add($"Correo inválido → {registros.correo}");
             }
 
-            if (!Regex.IsMatch(registros.telefono, @"^\d{16}$"))
+            if (!Regex.IsMatch(registros.telefono, @"^\d{10}$"))
             {
-                return BadRequest(new { mensaje = $"Hay un problema en el registro capturado: Teléfono inválido → {registros.telefono}" });
+                errores.Add($"Teléfono inválido → {registros.telefono}");
             }
 
             if (!Regex.IsMatch(registros.compania, @"^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"))
             {
-                return BadRequest(new { mensaje = $"Hay un problema en el registro capturado: Persona inválida → {registros.compania}" });
+                errores.Add($"Nombre de compañia inválido → {registros.compania}");
             }
 
             if (!Regex.IsMatch(registros.persona, @"^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"))
             {
-                return BadRequest(new { mensaje = $"Hay un problema en el registro capturado: Persona2 inválida → {registros.persona}" });
+                errores.Add($"Nombre de persona inválido → {registros.persona}");
             }
+
+            if (errores.Count > 0)
+            {
+                return BadRequest(new
+                {
+                    mensaje = "Hay errores en el registro capturado",
+                    errores
+                });
+            }
+
             _context.Registros.Add(registros);
             await _context.SaveChangesAsync();
             return Ok(registros);
