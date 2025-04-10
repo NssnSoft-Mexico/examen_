@@ -1,0 +1,78 @@
+
+<div class="toolbar" role="banner">
+  <span> {{ title }} </span>
+  <div class="spacer"></div>
+  <span (click)="clickTitle()" class="cur"> {{ title2 }} </span>
+</div> 
+
+<div class="content" role="main">
+
+
+  <div class="card-logo">
+    <img src="./../assets/images/weeclaims.png" class="imgLog">
+  </div>
+
+  <div class="card" *ngIf="!titleV">
+    <form [formGroup]="checkoutForm" (ngSubmit)="clickModalVal(checkoutForm.value)">
+      <h2> Registro persona </h2>
+      <div>
+          <input id="compania" type="text" formControlName="compania" placeholder="Nombre de la compañia">
+      </div>
+      <div>
+          <input id="persona" type="text" formControlName="persona" placeholder="Nombre de la persona para contacto">
+      </div>
+      <div>
+          <input id="correo" type="text" formControlName="correo" placeholder="Correo electrónico">
+      </div>
+      <div>
+          <input id="telefono" type="text" formControlName="telefono" placeholder="Teléfono">
+      </div>
+      <div>
+        <input id="terminos" type="checkbox" formControlName="terminos">
+        <label for="terminos"> He leído y acepto el <a href="">Aviso de privacidad/Terminos y condiciones </a> </label>
+      </div>
+      <div>
+        <button class="button" type="submit" class="{{checkoutForm.invalid?'disabled':''}}" [disabled]="checkoutForm.invalid"> Continuar </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card" *ngIf="titleV">
+    <h2> Registros </h2>
+    <div class="wid100">
+      <table>
+        <tr>
+          <th> Compañia </th>
+          <th> Contacto </th>
+          <th> Correo </th>
+          <th> Teléfono </th>
+        </tr>
+        <tr *ngFor="let item of items">
+          <td class="fotwe"> {{ item.compania }} </td>
+          <td> {{ item.persona }} </td>
+          <td> {{ item.correo }} </td>
+          <td> {{ item.telefono }} </td>
+        </tr>
+      </table>
+    </div>
+    <div class="marTop">
+      <button class="button" type="button" (click)="clickRegresar()"> Regresar </button>
+    </div>
+  </div>
+
+
+  <div id="myModal" class="modal {{modalV?'':'modalNone'}}">
+    <div class="modal-content">
+      <span class="close" (click)="clickModal()">&times;</span>
+      <p class="titulo {{validaRes?'sucses':'error'}}"> {{ titleModal }} </p>
+      <span> &nbsp;  </span>
+      <p class="{{ errores.compania?'error':'' }}"> {{ dataFor.compania }} </p>
+      <p class="{{ errores.persona?'error':'' }}"> {{ dataFor.persona }} </p>
+      <p class="{{ errores.correo?'error':'' }}"> {{ dataFor.correo }} </p>
+      <p class="{{ errores.telefono?'error':'' }}"> {{ dataFor.telefono }} </p>
+      <button id="myBtn" (click)="clickModal()">Aceptar</button>
+    </div>
+  </div>
+
+</div>
+
